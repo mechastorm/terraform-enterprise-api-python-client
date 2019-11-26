@@ -8,6 +8,7 @@ from .teams import Teams
 from .runs import Runs
 from .variables import Variables
 from .workspaces import Workspaces
+from .modules import Modules
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -34,7 +35,7 @@ SOFTWARE.
 """
 
 
-class Client(Organziations, Plans, Teams, Runs, Variables, Workspaces):
+class Client(Organziations, Plans, Teams, Runs, Variables, Workspaces, Modules):
     """
     Client class which inherits subclasses for different method types as defined in the TFE API Documentation. Set token
     and V2 API URL using the non default 'init' construcutor method.
@@ -46,9 +47,11 @@ class Client(Organziations, Plans, Teams, Runs, Variables, Workspaces):
     def __init__(self):
         return
 
-    def init(self, token, url, ssl_verification=True, version='v2'):
+    def init(self, token, url, ssl_verification=True, version='v2', api_version_module='v1'):
         self.token = token
-        self.url = url + '/api/{}/'.format(version)
+        self.base_domain = url
+        self.url = self.base_domain + '/api/{}/'.format(version)
+        self.url_module = self.base_domain + '/api/registry/{}/modules/'.format(api_version_module)
         self.headers = {
             'Content-Type': 'application/vnd.api+json',
             'Authorization': 'Bearer {}'.format(token)
