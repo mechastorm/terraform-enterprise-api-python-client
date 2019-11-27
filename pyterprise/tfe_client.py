@@ -51,7 +51,7 @@ class Client(Organziations, Plans, Teams, Runs, Variables, Workspaces, Modules):
         self.token = token
         self.base_domain = url
         self.url = self.base_domain + '/api/{}/'.format(version)
-        self.url_module = self.base_domain + '/api/registry/{}/modules/'.format(api_version_module)
+        self.url_module_standard_registry = self.base_domain + '/api/registry/{}/modules/'.format(api_version_module)
         self.headers = {
             'Content-Type': 'application/vnd.api+json',
             'Authorization': 'Bearer {}'.format(token)
